@@ -20,7 +20,7 @@ export const DEFAULT_FILTERS = {
 };
 
 const fieldBase =
-  'w-full h-10 bg-zinc-900/70 border border-zinc-800 hover:border-zinc-700 focus:border-red-600 focus:bg-zinc-900 text-xs font-mono text-zinc-100 placeholder:text-zinc-500 outline-none transition-colors';
+  'w-full h-10 bg-zinc-950 border border-zinc-800 hover:border-red-600/80 focus:border-red-500 focus:bg-black text-xs font-mono text-red-400 placeholder:text-red-700/70 outline-none transition-colors';
 
 const Select = ({ id, label, value, onChange, children }) => (
   <div className="relative">
@@ -29,11 +29,11 @@ const Select = ({ id, label, value, onChange, children }) => (
       id={id}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`${fieldBase} appearance-none pl-3 pr-8 cursor-pointer`}
+      className={`${fieldBase} appearance-none pl-3 pr-8 cursor-pointer text-red-400`}
     >
       {children}
     </select>
-    <ChevronDown className="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 top-3 pointer-events-none" />
+    <ChevronDown className="w-3.5 h-3.5 text-red-500 absolute right-2.5 top-3 pointer-events-none" />
   </div>
 );
 
@@ -52,7 +52,7 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
   return (
     <section
       aria-label="Inventory filters"
-      className="sticky top-16 z-40 border-b border-zinc-800/80 bg-zinc-950/85 backdrop-blur-md"
+      className="sticky top-16 z-40 border-b border-zinc-900 bg-black text-red-500 shadow-xl"
     >
       {/* Loading progress hairline */}
       <div className={`h-0.5 bg-red-600 transition-opacity duration-300 ${loading ? 'opacity-100 animate-pulse' : 'opacity-0'}`} />
@@ -73,7 +73,7 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
             />
           </div>
 
-          <div role="radiogroup" aria-label="Availability" className="flex h-10 border border-zinc-800 bg-zinc-900/70 shrink-0">
+          <div role="radiogroup" aria-label="Availability" className="flex h-10 border border-zinc-800 bg-zinc-950 shrink-0">
             {STATUS_SEGMENTS.map((seg) => {
               const active = filters.status === seg.value;
               return (
@@ -84,8 +84,10 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
                   role="radio"
                   aria-checked={active}
                   onClick={() => set('status')(seg.value)}
-                  className={`px-4 text-[11px] font-mono uppercase tracking-wider transition-colors border-r last:border-r-0 border-zinc-800 ${
-                    active ? 'bg-red-600 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/70'
+                  className={`px-4 text-[11px] font-mono uppercase tracking-wider transition-colors border-r last:border-r-0 border-zinc-800 cursor-pointer ${
+                    active 
+                      ? 'bg-red-600 text-white font-bold' 
+                      : 'text-red-400 hover:text-red-300 hover:bg-zinc-900'
                   }`}
                 >
                   {seg.label}
@@ -98,9 +100,9 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
         {/* Row 2: make, price range, sort, reset */}
         <div className="grid grid-cols-2 md:grid-cols-[1.2fr_1fr_1fr_1.3fr_auto] gap-3 items-center">
           <Select id="filter-make" label="Make" value={filters.make} onChange={set('make')}>
-            <option value="">All Makes</option>
+            <option value="" className="bg-zinc-950 text-red-400">All Makes</option>
             {BRAND_OPTIONS.map((b) => (
-              <option key={b} value={b}>{b}</option>
+              <option key={b} value={b} className="bg-zinc-950 text-red-400">{b}</option>
             ))}
           </Select>
 
@@ -134,7 +136,7 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
 
           <Select id="filter-sort" label="Sort order" value={filters.sort} onChange={set('sort')}>
             {SORT_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
+              <option key={o.value} value={o.value} className="bg-zinc-950 text-red-400">{o.label}</option>
             ))}
           </Select>
 
@@ -143,19 +145,20 @@ export const FilterBar = ({ filters, onChange, onReset, resultCount, loading }) 
             type="button"
             onClick={onReset}
             disabled={activeCount === 0}
-            className="col-span-2 md:col-span-1 h-10 inline-flex items-center justify-center gap-2 px-4 border border-red-600/50 text-red-400 hover:bg-red-600 hover:text-white hover:border-red-600 disabled:border-zinc-800 disabled:text-zinc-600 disabled:hover:bg-transparent text-[11px] font-mono uppercase tracking-wider transition-colors"
+            className="col-span-2 md:col-span-1 h-10 inline-flex items-center justify-center gap-2 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:bg-zinc-950 disabled:border disabled:border-zinc-800 disabled:text-zinc-600 disabled:hover:bg-zinc-950 text-white text-[11px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset Filters</span>
             {activeCount > 0 && (
-              <span className="bg-red-600 text-white px-1.5 text-[10px] leading-4">{activeCount}</span>
+              <span className="bg-black text-white px-1.5 text-[10px] leading-4 border border-white/30">{activeCount}</span>
             )}
           </button>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
+        {/* Telemetry Row */}
+        <div className="flex items-center justify-between text-[11px] font-mono text-red-400 pt-0.5">
           <span className="flex items-center gap-1.5">
-            <SlidersHorizontal className="w-3 h-3" />
+            <SlidersHorizontal className="w-3 h-3 text-red-500" />
             {activeCount > 0 ? `${activeCount} filter${activeCount > 1 ? 's' : ''} active` : 'No filters applied'}
           </span>
           <span>

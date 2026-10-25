@@ -86,6 +86,40 @@ export class VehicleController {
       next(error);
     }
   };
+
+  purchase = async (req, res, next) => {
+    try {
+      const vehicleId = req.params.id;
+      const userId = req.user.id;
+      const quantity = req.body?.quantity !== undefined ? req.body.quantity : 1;
+      const result = await this.vehicleService.purchaseVehicle(vehicleId, userId, quantity);
+      return res.status(200).json({
+        success: true,
+        data: {
+          orderId: result.orderId,
+          vehicle: result.vehicle
+        },
+        error: null
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  restock = async (req, res, next) => {
+    try {
+      const vehicleId = req.params.id;
+      const quantity = req.body?.quantity ?? req.body?.amount ?? 1;
+      const vehicle = await this.vehicleService.restockVehicle(vehicleId, quantity);
+      return res.status(200).json({
+        success: true,
+        data: { vehicle },
+        error: null
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export const vehicleController = new VehicleController();

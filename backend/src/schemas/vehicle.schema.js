@@ -90,4 +90,28 @@ export const searchVehicleSchema = z.object({
   })
 });
 
+export const purchaseVehicleSchema = z.object({
+  params: z.object({
+    id: z.string().min(1, 'Vehicle ID is required')
+  }),
+  body: z
+    .object({
+      quantity: z.coerce.number().int().positive().default(1)
+    })
+    .optional()
+    .default({ quantity: 1 })
+});
 
+export const restockVehicleSchema = z.object({
+  params: z.object({
+    id: z.string().min(1, 'Vehicle ID is required')
+  }),
+  body: z
+    .object({
+      quantity: z.coerce.number().int().positive().optional(),
+      amount: z.coerce.number().int().positive().optional()
+    })
+    .refine((data) => data.quantity !== undefined || data.amount !== undefined, {
+      message: 'Quantity or amount is required'
+    })
+});

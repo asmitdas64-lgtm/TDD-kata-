@@ -1,9 +1,13 @@
 import { AppError } from '../errors/app-error.js';
+import { prisma as defaultPrisma } from '../config/prisma.js';
 import { vehicleRepository as defaultVehicleRepo } from '../repositories/vehicle.repository.js';
+import { orderRepository as defaultOrderRepo } from '../repositories/order.repository.js';
 
 export class VehicleService {
-  constructor(vehicleRepo = defaultVehicleRepo) {
+  constructor(vehicleRepo = defaultVehicleRepo, orderRepo = defaultOrderRepo, prismaClient = defaultPrisma) {
     this.vehicleRepo = vehicleRepo;
+    this.orderRepo = orderRepo;
+    this.prisma = prismaClient;
   }
 
   async createVehicle(data) {
@@ -136,6 +140,54 @@ export class VehicleService {
         totalPages
       }
     };
+  }
+
+  async purchaseVehicle(vehicleId, userId, quantity = 1) {
+    return this.prisma.$transaction(async (tx) => {
+      const vehicle = await tx.vehicle.findUnique({
+        where: { id: vehicleId }
+      });
+
+      if (!vehicle) {
+        throw new AppError('RESOURCE_NOT_FOUND', 404, `Vehicle with id '${vehicleId}' was not found`);
+      }
+
+      if (vehicle.quantity < quantity || vehicle.status === 'SOLD') {
+        throw new AppError('OUT_OF_STOCK', 400, 'Vehicle is out of stock');
+      }
+
+      const updatedVehicle = await this.vehicleRepo.decrementStock(vehicleId, quantity, tx);
+      if (!updatedVehicle) {
+        throw new AppError('OUT_OF_STOCK', 400, 'Vehicle is out of stock');
+      }
+
+      const order = await this.orderRepo.createOrder(
+        {
+          userId,
+          vehicleId,
+          unitPrice: vehicle.price,
+          quantity,
+          status: 'COMPLETED'
+        },
+        tx
+      );
+
+      return {
+        orderId: order.id,
+        order,
+        vehicle: updatedVehicle
+      };
+    });
+  }
+
+  async restockVehicle(vehicleId, quantity = 1) {
+    const existing = await this.vehicleRepo.findById(vehicleId);
+    if (!existing) {
+      throw new AppError('RESOURCE_NOT_FOUND', 404, `Vehicle with id '${vehicleId}' was not found`);
+    }
+
+    const updatedVehicle = await this.vehicleRepo.incrementStock(vehicleId, quantity);
+    return updatedVehicle;
   }
 }
 

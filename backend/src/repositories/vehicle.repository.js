@@ -59,6 +59,50 @@ export class VehicleRepository {
     });
   }
 
+  async decrementStock(id, quantity = 1, tx = null) {
+    const client = tx || this.prisma;
+    const vehicle = await client.vehicle.findUnique({
+      where: { id }
+    });
+
+    if (!vehicle || vehicle.quantity < quantity) {
+      return null;
+    }
+
+    const newQuantity = vehicle.quantity - quantity;
+    const newStatus = newQuantity === 0 ? 'SOLD' : vehicle.status;
+
+    return client.vehicle.update({
+      where: { id },
+      data: {
+        quantity: newQuantity,
+        status: newStatus
+      }
+    });
+  }
+
+  async incrementStock(id, quantity = 1, tx = null) {
+    const client = tx || this.prisma;
+    const vehicle = await client.vehicle.findUnique({
+      where: { id }
+    });
+
+    if (!vehicle) {
+      return null;
+    }
+
+    const newQuantity = vehicle.quantity + quantity;
+    const newStatus = newQuantity > 0 ? 'AVAILABLE' : vehicle.status;
+
+    return client.vehicle.update({
+      where: { id },
+      data: {
+        quantity: newQuantity,
+        status: newStatus
+      }
+    });
+  }
+
   buildSearchWhereClause(filters = {}) {
     const where = {};
     const andClauses = [];

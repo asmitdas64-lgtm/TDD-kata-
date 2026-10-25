@@ -47,12 +47,6 @@ export function App() {
               <Route path="*" element={<Navigate to="/vehicles" replace />} />
             </Routes>
           </main>
-
-          <footer className="border-t border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md py-6 text-center text-xs font-mono text-zinc-500">
-            <p className="uppercase tracking-widest">
-              TDD Kata: Car Dealership Inventory System &bull; {new Date().getFullYear()}
-            </p>
-          </footer>
         </div>
       </BrowserRouter>
     </AuthProvider>

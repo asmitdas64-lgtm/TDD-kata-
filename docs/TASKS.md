@@ -9,15 +9,15 @@ Legend:
 ---
 
 ## Phase 1: Tooling & Infrastructure Setup
-- [ ] Task 1.1: Backend environment & ESM configuration (`backend/package.json`, `backend/.env.example`)
-- [ ] Task 1.2: Prisma configuration & database connection setup (`backend/prisma/schema.prisma`, `backend/src/config/prisma.js`)
-- [ ] Task 1.3: Central error handling & AppError hierarchy (`backend/src/errors/app-error.js`, `backend/src/middlewares/error.middleware.js`, `backend/tests/unit/errors.test.js`)
-- [ ] Task 1.4: Base Express application bootstrapping with security headers & logger (`backend/src/app.js`, `backend/src/server.js`, `backend/tests/integration/health.test.js`)
+- [x] Task 1.1: Backend environment & ESM configuration (`backend/package.json`, `backend/.env.example`)
+- [x] Task 1.2: Prisma configuration & database connection setup (`backend/prisma/schema.prisma`, `backend/src/config/prisma.js`)
+- [x] Task 1.3: Central error handling & AppError hierarchy (`backend/src/errors/app-error.js`, `backend/src/middlewares/error.middleware.js`, `backend/tests/unit/errors.test.js`)
+- [x] Task 1.4: Base Express application bootstrapping with security headers & logger (`backend/src/app.js`, `backend/src/server.js`, `backend/tests/integration/health.test.js`)
 
 ---
 
 ## Phase 2: Database Schema & Migration
-- [ ] Task 2.1: Implement User, Vehicle, and Order models in Prisma (`backend/prisma/schema.prisma`)
+- [x] Task 2.1: Implement User, Vehicle, and Order models in Prisma (`backend/prisma/schema.prisma`)
 - [ ] Task 2.2: Apply initial migration with check constraints (`backend/prisma/migrations/`)
 - [ ] Task 2.3: Implement database seed script in ESM with admin user and 10 vehicles (`backend/prisma/seed.js`)
 

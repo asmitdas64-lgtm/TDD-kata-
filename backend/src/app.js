@@ -6,6 +6,7 @@ import { errorHandler } from './middlewares/error.middleware.js';
 import { AppError } from './errors/app-error.js';
 
 import authRoutes from './routes/auth.routes.js';
+import vehicleRoutes from './routes/vehicle.routes.js';
 
 export const createApp = () => {
   const app = express();
@@ -22,6 +23,7 @@ export const createApp = () => {
 
   // API Routes
   app.use('/api/auth', authRoutes);
+  app.use('/api/vehicles', vehicleRoutes);
 
   // Healthcheck Probe
   app.get('/health', (req, res) => {

@@ -58,9 +58,12 @@ export const LoginPage = () => {
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent" />
 
         {/* Clean Header */}
-        <div className="mb-8 text-center">
-          <div className="inline-block px-2.5 py-0.5 mb-3 bg-red-950/50 border border-red-800/40 text-red-500 font-mono text-[10px] tracking-widest uppercase">
-            Authentication
+        <div className="mb-8 text-center flex flex-col items-center">
+          <div className="w-14 h-14 mb-3 border border-zinc-700 shadow-xl overflow-hidden">
+            <img src="/tdd-logo.png" alt="TDD Official Logo" className="w-full h-full object-cover" />
+          </div>
+          <div className="inline-block px-2.5 py-0.5 mb-2 bg-zinc-900 border border-zinc-800 text-lime-400 font-mono text-[10px] tracking-widest uppercase font-bold">
+            TDD&reg; Official Gateway
           </div>
           <h1 className="text-2xl font-bold uppercase tracking-tight text-white">
             Sign In

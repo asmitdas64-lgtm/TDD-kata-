@@ -48,6 +48,11 @@ export const VehicleCard = ({ vehicle }) => {
           )}
         </div>
 
+        <div className="absolute top-3 right-3 flex items-center gap-1 bg-zinc-950/90 border border-zinc-800/90 px-1.5 py-0.5 shadow-sm">
+          <img src="/tdd-logo.png" alt="TDD" className="w-3.5 h-3.5 object-cover" />
+          <span className="text-[9px] font-mono text-lime-400 font-bold">TDD&reg;</span>
+        </div>
+
         {media.isFallback && (
           <span className="absolute bottom-3 right-3 text-[9px] font-mono uppercase tracking-widest text-zinc-400 bg-zinc-950/80 px-2 py-0.5 border border-zinc-800">
             Studio photo pending

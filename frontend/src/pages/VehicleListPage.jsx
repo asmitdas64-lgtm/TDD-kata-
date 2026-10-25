@@ -98,16 +98,24 @@ export const VehicleListPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-red-500 font-semibold">
-              Live Inventory
-            </span>
-            <h1 className="mt-1 text-3xl md:text-5xl font-extrabold uppercase tracking-tight text-white">
-              The Garage <span className="text-zinc-500">Collection</span>
-            </h1>
-            <p className="mt-2 text-sm text-zinc-400 max-w-xl">
-              Performance coupes, super-sedans and track-bred SUVs — every unit tracked to the stock count.
-            </p>
+          <div className="flex items-start gap-4">
+            <img 
+              src="/tdd-logo.png" 
+              alt="TDD Official Logo" 
+              className="w-14 h-14 md:w-16 md:h-16 shrink-0 border border-zinc-700 shadow-xl hidden sm:block object-cover" 
+            />
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-lime-400 font-semibold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-lime-400 rounded-full animate-pulse" />
+                <span>Official TDD&reg; Live Inventory</span>
+              </span>
+              <h1 className="mt-1 text-3xl md:text-5xl font-extrabold uppercase tracking-tight text-white">
+                The Garage <span className="text-zinc-500">Collection</span>
+              </h1>
+              <p className="mt-2 text-sm text-zinc-400 max-w-xl">
+                Certified TDD&reg; performance machinery &mdash; every unit tracked to the live stock count.
+              </p>
+            </div>
           </div>
           <div className="font-mono text-xs text-zinc-400 bg-zinc-950/70 border border-zinc-800/80 backdrop-blur-md px-4 py-3">
             Page <span className="text-zinc-100">{pagination.page}</span> / {pagination.totalPages}

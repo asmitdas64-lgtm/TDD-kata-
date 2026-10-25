@@ -156,14 +156,17 @@ export const AdminInventoryPage = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Editorial Header */}
       <div className="border-b border-zinc-800 pb-8 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <div className="flex items-center space-x-2 text-red-500 font-mono text-xs uppercase tracking-widest font-semibold mb-1">
-            <Shield className="w-4 h-4" />
-            <span>Admin Control Center</span>
+        <div className="flex items-center gap-3.5">
+          <img src="/tdd-logo.png" alt="TDD Official Logo" className="w-12 h-12 object-cover border border-zinc-700 shadow-lg shrink-0" />
+          <div>
+            <div className="flex items-center space-x-2 text-lime-400 font-mono text-xs uppercase tracking-widest font-semibold mb-1">
+              <Shield className="w-4 h-4" />
+              <span>Official TDD&reg; Admin Operations</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-white m-0">
+              Fleet <span className="text-zinc-500">Inventory Management</span>
+            </h1>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-white m-0">
-            Fleet <span className="text-zinc-500">Inventory Operations</span>
-          </h1>
         </div>
 
         <div className="flex items-center space-x-3">

@@ -153,13 +153,19 @@ export const VehicleDetailPage = () => {
                 </span>
               )}
             </div>
+
+            {/* Official TDD badge */}
+            <div className="absolute top-4 right-4 flex items-center gap-2 bg-zinc-950/90 border border-zinc-700/80 px-2.5 py-1 backdrop-blur-md shadow-lg">
+              <img src="/tdd-logo.png" alt="TDD" className="w-4 h-4 object-cover" />
+              <span className="text-[10px] font-mono font-bold tracking-wider text-lime-400 uppercase">TDD&reg; Certified</span>
+            </div>
           </div>
 
           {/* Provenance Banner */}
           <div className="p-4 bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md flex items-center justify-between text-xs font-mono text-zinc-400">
             <div className="flex items-center space-x-2">
-              <Shield className="w-4 h-4 text-red-600" />
-              <span>Full Provenance & Inspection Verified</span>
+              <img src="/tdd-logo.png" alt="TDD" className="w-4 h-4 object-cover shrink-0" />
+              <span>OFFICIAL TDD&reg; INVENTORY &bull; ATOMIC CONCURRENCY LOCK</span>
             </div>
             <span className="text-zinc-500">APEX-STD-990</span>
           </div>

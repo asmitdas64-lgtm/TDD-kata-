@@ -22,15 +22,16 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link to="/vehicles" className="flex items-center gap-3 group min-w-0" aria-label="TDD Kata home">
-          <div className="w-9 h-9 shrink-0 bg-red-600 group-hover:bg-red-500 transition-colors flex items-center justify-center">
-            <CarFront className="w-5 h-5 text-white" strokeWidth={2.25} />
+          <div className="w-10 h-10 shrink-0 overflow-hidden border border-zinc-700 group-hover:border-lime-400 transition-colors shadow-md shadow-black/50">
+            <img src="/tdd-logo.png" alt="TDD Official Logo" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col min-w-0 leading-tight">
-            <span className="font-mono font-bold text-[13px] sm:text-sm tracking-tight text-zinc-100 truncate">
-              <span className="text-red-500">TDD Kata:</span> Car Dealership Inventory System
+            <span className="font-mono font-bold text-[13px] sm:text-sm tracking-tight text-zinc-100 truncate flex items-center gap-1.5">
+              <span className="text-lime-400 font-extrabold tracking-wider">TDD&reg;</span>
+              <span>Car Dealership Inventory</span>
             </span>
-            <span className="hidden sm:block text-[10px] text-zinc-500 font-mono tracking-[0.2em] uppercase">
-              Red &middot; Green &middot; Refactor
+            <span className="hidden sm:block text-[10px] text-zinc-400 font-mono tracking-[0.2em] uppercase">
+              Official Automotive Catalog
             </span>
           </div>
         </Link>

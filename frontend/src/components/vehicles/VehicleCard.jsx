@@ -5,11 +5,11 @@ import { formatCurrency, formatMileage } from '../../utils/vehicle.utils.js';
 import { ArrowUpRight, Gauge, Calendar, Cog, Palette } from 'lucide-react';
 
 const SpecChip = ({ icon: Icon, label, value }) => (
-  <div className="flex items-center gap-2 border border-zinc-800 bg-zinc-900/60 px-2.5 py-2 min-w-0">
+  <div className="flex items-center gap-2 min-w-0 py-0.5">
     <Icon className="w-3.5 h-3.5 text-red-500 shrink-0" />
     <div className="min-w-0 leading-tight">
-      <span className="block text-[9px] uppercase tracking-widest text-zinc-500">{label}</span>
-      <span className="block text-[11px] text-zinc-200 truncate">{value}</span>
+      <span className="block text-[9px] uppercase tracking-wider text-zinc-400 font-mono">{label}</span>
+      <span className="block text-[11px] font-mono font-medium text-zinc-200 truncate">{value}</span>
     </div>
   </div>
 );
@@ -73,7 +73,8 @@ export const VehicleCard = ({ vehicle }) => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 font-mono">
+        {/* Clean Car Properties - directly on background without grey boxes */}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 font-mono py-1">
           <SpecChip icon={Calendar} label="Year" value={vehicle.year} />
           <SpecChip icon={Gauge} label="Mileage" value={formatMileage(vehicle.mileage)} />
           <SpecChip icon={Cog} label="Transmission" value={media.transmission || '—'} />
@@ -88,7 +89,7 @@ export const VehicleCard = ({ vehicle }) => {
           <Link
             id={`vehicle-view-${vehicle.id}`}
             to={`/vehicles/${vehicle.id}`}
-            className="inline-flex items-center gap-1.5 h-10 px-4 text-[11px] font-mono font-semibold uppercase tracking-wider text-white bg-zinc-800 group-hover:bg-red-600 transition-colors"
+            className="inline-flex items-center gap-1.5 h-10 px-4 text-[11px] font-mono font-semibold uppercase tracking-wider text-white bg-zinc-800 hover:bg-red-600 group-hover:bg-red-600 transition-colors"
           >
             View Vehicle
             <ArrowUpRight className="w-3.5 h-3.5" />

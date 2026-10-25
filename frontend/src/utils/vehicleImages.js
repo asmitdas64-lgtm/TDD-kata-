@@ -7,6 +7,7 @@ const IMG = '/vehicles';
 
 export const FALLBACK_IMAGE = `${IMG}/garage-bg.jpg`;
 export const GARAGE_BACKGROUND = `${IMG}/garage-bg.jpg`;
+export const AUTH_BACKGROUND = `${IMG}/auth-bg.jpg`;
 
 const SUV_PATTERN = /(x5|x6|x7|cayenne|macan|g ?63|g-?class|rs ?q8|q7|q8|urus|suv|tahoe|defender)/i;
 

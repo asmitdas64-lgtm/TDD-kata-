@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import { AlertCircle, Lock, Mail, User, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { AUTH_BACKGROUND } from '../utils/vehicleImages.js';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -45,9 +46,20 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-md bg-zinc-950/85 backdrop-blur-xl border border-zinc-800/80 p-8 sm:p-10 shadow-2xl relative">
-        {/* Subtle accent border on top */}
+    <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      {/* Dedicated Auth Studio Background */}
+      <div aria-hidden="true" className="fixed inset-0 z-0 bg-[#060608]">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-70"
+          style={{ backgroundImage: `url("${AUTH_BACKGROUND}")` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-950/60 to-zinc-950/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-transparent to-zinc-950/95" />
+      </div>
+
+      {/* Main Centered Card */}
+      <div className="relative z-10 w-full max-w-md bg-zinc-950/85 backdrop-blur-xl border border-zinc-800/80 p-8 sm:p-10 shadow-2xl">
+        {/* Subtle accent line on top */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent" />
 
         {/* Clean Header */}

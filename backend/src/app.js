@@ -1,8 +1,11 @@
+import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error.middleware.js';
 import { AppError } from './errors/app-error.js';
+
+import authRoutes from './routes/auth.routes.js';
 
 export const createApp = () => {
   const app = express();
@@ -16,6 +19,9 @@ export const createApp = () => {
     })
   );
   app.use(express.json());
+
+  // API Routes
+  app.use('/api/auth', authRoutes);
 
   // Healthcheck Probe
   app.get('/health', (req, res) => {

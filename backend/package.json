@@ -41,5 +41,8 @@
       "src/**/*.js",
       "!src/server.js"
     ]
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

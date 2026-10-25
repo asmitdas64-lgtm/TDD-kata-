@@ -157,10 +157,15 @@ export const AdminInventoryPage = () => {
       {/* Editorial Header */}
       <div className="border-b border-zinc-800 pb-8 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <img src="/tdd-logo.png" alt="TDD Official Logo" className="w-12 h-12 object-cover border border-zinc-700 shadow-lg shrink-0" />
+          <div className="relative">
+            <div className="w-12 h-12 overflow-hidden border border-zinc-700 shadow-xl shrink-0 transform -skew-x-3">
+              <img src="/tdd-logo.png" alt="TDD Official Logo" className="w-full h-full object-cover scale-105" />
+            </div>
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-lime-400 rotate-45 border border-black pointer-events-none opacity-90" />
+          </div>
           <div>
             <div className="flex items-center space-x-2 text-lime-400 font-mono text-xs uppercase tracking-widest font-semibold mb-1">
-              <Shield className="w-4 h-4" />
+              <span className="w-1.5 h-1.5 bg-lime-400 rounded-full animate-pulse" />
               <span>Official TDD&reg; Admin Operations</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-white m-0">
@@ -172,9 +177,10 @@ export const AdminInventoryPage = () => {
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="bg-red-600 hover:bg-red-700 text-white text-xs font-mono uppercase tracking-wider py-2.5 px-4 flex items-center space-x-2 transition-colors font-semibold"
+            className="bg-zinc-950 hover:bg-black border border-red-500/40 hover:border-lime-400 text-white text-xs font-mono uppercase tracking-wider py-2.5 px-4 flex items-center space-x-2 transition-all font-bold shadow-md group cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 group-hover:bg-lime-400 transition-colors animate-pulse" />
+            <Plus className="w-4 h-4 text-zinc-300 group-hover:text-white" />
             <span>Add Vehicle Spec</span>
           </button>
           <button

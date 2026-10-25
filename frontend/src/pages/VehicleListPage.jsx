@@ -99,11 +99,16 @@ export const VehicleListPage = () => {
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="flex items-start gap-4">
-            <img 
-              src="/tdd-logo.png" 
-              alt="TDD Official Logo" 
-              className="w-14 h-14 md:w-16 md:h-16 shrink-0 border border-zinc-700 shadow-xl hidden sm:block object-cover" 
-            />
+            <div className="relative hidden sm:block">
+              <div className="w-14 h-14 md:w-16 md:h-16 shrink-0 border border-zinc-700 shadow-xl overflow-hidden transform -skew-x-3">
+                <img 
+                  src="/tdd-logo.png" 
+                  alt="TDD Official Logo" 
+                  className="w-full h-full object-cover scale-105" 
+                />
+              </div>
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-lime-400 rotate-45 border border-black pointer-events-none opacity-90" />
+            </div>
             <div>
               <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-lime-400 font-semibold flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-lime-400 rounded-full animate-pulse" />
@@ -112,13 +117,14 @@ export const VehicleListPage = () => {
               <h1 className="mt-1 text-3xl md:text-5xl font-extrabold uppercase tracking-tight text-white">
                 The Garage <span className="text-zinc-500">Collection</span>
               </h1>
-              <p className="mt-2 text-sm text-zinc-400 max-w-xl">
+              <p className="mt-2 text-sm text-zinc-400 max-w-xl font-mono text-xs text-zinc-400">
                 Certified TDD&reg; performance machinery &mdash; every unit tracked to the live stock count.
               </p>
             </div>
           </div>
-          <div className="font-mono text-xs text-zinc-400 bg-zinc-950/70 border border-zinc-800/80 backdrop-blur-md px-4 py-3">
-            Page <span className="text-zinc-100">{pagination.page}</span> / {pagination.totalPages}
+          <div className="font-mono text-xs text-zinc-400 bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md px-4 py-3 relative overflow-hidden shadow-lg">
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-red-600/40 via-red-500 to-red-600/40" />
+            Page <span className="text-zinc-100 font-semibold">{pagination.page}</span> / {pagination.totalPages}
             <span className="mx-2 text-zinc-700">|</span>
             <span className="text-red-500 font-bold">{pagination.total}</span> units
           </div>

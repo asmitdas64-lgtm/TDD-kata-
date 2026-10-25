@@ -21,8 +21,11 @@ export const VehicleCard = ({ vehicle }) => {
   return (
     <article
       id={`vehicle-card-${vehicle.id}`}
-      className="group flex flex-col bg-zinc-950/80 backdrop-blur-md border border-zinc-800/80 hover:border-red-600/60 transition-colors duration-300 overflow-hidden"
+      className="group flex flex-col bg-zinc-950/85 backdrop-blur-md border border-zinc-800/80 hover:border-red-600/60 transition-all duration-300 overflow-hidden relative shadow-lg"
     >
+      {/* Subtle top shift-light hairline indicator */}
+      <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/40 to-transparent group-hover:via-red-500 transition-all duration-500 z-10" />
+
       {/* Image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900">
         <img
@@ -37,18 +40,18 @@ export const VehicleCard = ({ vehicle }) => {
 
         <div className="absolute top-3 left-3">
           {isAvailable ? (
-            <span className="inline-flex items-center gap-1.5 bg-zinc-950/85 text-emerald-400 border border-emerald-500/50 text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest">
+            <span className="inline-flex items-center gap-1.5 bg-zinc-950/90 text-emerald-400 border border-emerald-500/50 text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest backdrop-blur-md">
               <span className="w-1.5 h-1.5 bg-emerald-400" />
               Available &middot; {vehicle.quantity}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest">
+            <span className="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest backdrop-blur-md">
               Sold
             </span>
           )}
         </div>
 
-        <div className="absolute top-3 right-3 flex items-center gap-1 bg-zinc-950/90 border border-zinc-800/90 px-1.5 py-0.5 shadow-sm">
+        <div className="absolute top-3 right-3 flex items-center gap-1 bg-zinc-950/90 border border-zinc-800/90 px-1.5 py-0.5 shadow-sm backdrop-blur-md">
           <img src="/tdd-logo.png" alt="TDD" className="w-3.5 h-3.5 object-cover" />
           <span className="text-[9px] font-mono text-lime-400 font-bold">TDD&reg;</span>
         </div>
@@ -67,7 +70,7 @@ export const VehicleCard = ({ vehicle }) => {
       {/* Body */}
       <div className="p-5 flex-1 flex flex-col gap-4">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-red-500">{vehicle.make}</span>
+          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-red-500 font-semibold">{vehicle.make}</span>
           <h3 className="mt-0.5 text-lg font-extrabold text-zinc-50 uppercase tracking-tight leading-snug">
             {vehicle.model}
           </h3>
@@ -89,10 +92,11 @@ export const VehicleCard = ({ vehicle }) => {
           <Link
             id={`vehicle-view-${vehicle.id}`}
             to={`/vehicles/${vehicle.id}`}
-            className="inline-flex items-center gap-1.5 h-10 px-4 text-[11px] font-mono font-semibold uppercase tracking-wider text-white bg-zinc-800 hover:bg-red-600 group-hover:bg-red-600 transition-colors"
+            className="inline-flex items-center gap-2 h-10 px-4 text-[11px] font-mono font-bold uppercase tracking-wider text-white bg-zinc-900 border border-zinc-800/80 hover:bg-black hover:border-lime-400/80 group/btn transition-all shadow-sm cursor-pointer"
           >
-            View Vehicle
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 group-hover/btn:bg-lime-400 transition-colors animate-pulse" />
+            <span>View Vehicle</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover/btn:text-white group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
       </div>

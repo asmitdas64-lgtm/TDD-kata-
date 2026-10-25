@@ -172,7 +172,10 @@ export const VehicleDetailPage = () => {
         </div>
 
         {/* Right: Technical Specification & Acquisition Panel */}
-        <div className="lg:col-span-5 flex flex-col justify-between bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md p-6 sm:p-8">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-zinc-950/85 border border-zinc-800/80 backdrop-blur-md p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+          {/* Subtle top shift-light hairline */}
+          <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-red-600/30 via-red-500 to-red-600/30" />
+
           <div>
             <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-4">
               <span className="text-xs font-mono uppercase tracking-widest text-red-500 font-semibold">
@@ -188,7 +191,7 @@ export const VehicleDetailPage = () => {
               <span className="text-red-500">{vehicle.model}</span>
             </h1>
 
-            <div className="my-6 p-4 bg-zinc-900/60 border-l-2 border-red-600">
+            <div className="my-6 p-4 bg-gradient-to-r from-zinc-950 via-[#3d0a0e]/40 to-zinc-950 border-l-2 border-red-600">
               <span className="text-xs font-mono uppercase text-zinc-400 block mb-1">
                 Acquisition Value
               </span>
@@ -231,8 +234,9 @@ export const VehicleDetailPage = () => {
                     setIsPurchaseModalOpen(true);
                   }
                 }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 px-4 font-semibold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 transition-colors"
+                className="w-full bg-gradient-to-r from-red-600 via-red-700 to-red-600 hover:from-red-500 hover:to-red-600 text-white py-3.5 px-4 font-mono font-bold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 transition-all shadow-lg shadow-red-950/50 border border-red-500/40 group cursor-pointer"
               >
+                <span className="w-1.5 h-1.5 rounded-full bg-white group-hover:bg-lime-400 transition-colors animate-pulse" />
                 <ShoppingBag className="w-4 h-4" />
                 <span>
                   {isAuthenticated ? 'Initiate Vehicle Acquisition' : 'Sign In To Purchase'}

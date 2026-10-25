@@ -23,7 +23,8 @@ export function App() {
               style={{ backgroundImage: `url("${GARAGE_BACKGROUND}")` }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-950/80 to-zinc-950" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-red-950/25 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-red-950/25 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-red-950/20 to-transparent" />
           </div>
 
           <Navbar />

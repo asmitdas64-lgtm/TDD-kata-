@@ -4,7 +4,7 @@
 
 ```prisma
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -83,12 +83,12 @@ model Order {
 
 ### 2.1 Database-Level Constraints
 - **Unique Constraints:** `User.email` and `Vehicle.vin` enforce natural unique constraints.
-- **Check Constraints (PostgreSQL Migration DDL):**
-  Prisma does not natively support check constraints in schema syntax; a raw SQL migration establishes strict database invariants:
+- **Check Constraints (MySQL Migration DDL):**
+  Prisma does not natively support check constraints in schema syntax; a raw SQL migration establishes strict database invariants (supported in MySQL 8.0.16+):
   ```sql
-  ALTER TABLE "Vehicle" ADD CONSTRAINT "vehicle_quantity_non_negative" CHECK ("quantity" >= 0);
-  ALTER TABLE "Vehicle" ADD CONSTRAINT "vehicle_price_positive" CHECK ("price" > 0);
-  ALTER TABLE "Vehicle" ADD CONSTRAINT "vehicle_mileage_non_negative" CHECK ("mileage" >= 0);
+  ALTER TABLE `Vehicle` ADD CONSTRAINT `vehicle_quantity_non_negative` CHECK (`quantity` >= 0);
+  ALTER TABLE `Vehicle` ADD CONSTRAINT `vehicle_price_positive` CHECK (`price` > 0);
+  ALTER TABLE `Vehicle` ADD CONSTRAINT `vehicle_mileage_non_negative` CHECK (`mileage` >= 0);
   ```
 
 ### 2.2 Application-Level Invariants

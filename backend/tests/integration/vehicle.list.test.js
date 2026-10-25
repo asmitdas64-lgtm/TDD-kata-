@@ -28,12 +28,13 @@ describe('GET /api/vehicles Integration Tests', () => {
   it('should filter vehicles by make', async () => {
     const res = await request(app)
       .get('/api/vehicles')
-      .query({ make: 'Honda' });
+      .query({ make: 'Porsche' });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
     res.body.data.forEach((vehicle) => {
-      expect(vehicle.make.toLowerCase()).toContain('honda');
+      expect(vehicle.make.toLowerCase()).toContain('porsche');
     });
   });
 

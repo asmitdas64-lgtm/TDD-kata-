@@ -107,15 +107,20 @@ export class VehicleRepository {
     const where = {};
     const andClauses = [];
 
-    // General text search (q or search) across make and model
+    // General text search (q or search): every whitespace-separated token must
+    // match make, model, or VIN (e.g. "Porsche 911 GT3" or a partial VIN).
     const searchTerm = filters.q || filters.search;
     if (searchTerm) {
-      andClauses.push({
-        OR: [
-          { make: { contains: searchTerm } },
-          { model: { contains: searchTerm } }
-        ]
-      });
+      const tokens = String(searchTerm).trim().split(/\s+/).filter(Boolean);
+      for (const token of tokens) {
+        andClauses.push({
+          OR: [
+            { make: { contains: token } },
+            { model: { contains: token } },
+            { vin: { contains: token } }
+          ]
+        });
+      }
     }
 
     if (filters.make) {

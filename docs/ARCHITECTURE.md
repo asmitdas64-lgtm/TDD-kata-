@@ -19,7 +19,7 @@ HTTP Request
 [ Repositories ]             ──> Data access layer, query isolation, persistence operations
      │
      ▼
-[ Data Access / Prisma ]     ──> Prisma client (@prisma/client), connection pool, PostgreSQL
+[ Data Access / Prisma ]     ──> Prisma client (@prisma/client), connection pool, MySQL
 ```
 
 ### Layer Responsibilities
@@ -189,7 +189,7 @@ Client (Customer)
       │    UPDATE "Vehicle" SET quantity = quantity - 1 WHERE id = $1 AND quantity > 0
       │    INSERT INTO "Order" (...) VALUES (...)
       ▼
-[ PostgreSQL Database ]
+[ MySQL Database ]
       │ 10. Commits row-level transaction atomically
       ▲
 [ Response Unwinding ]

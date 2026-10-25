@@ -81,7 +81,7 @@ describe('VehicleListPage Tests', () => {
       </BrowserRouter>
     );
 
-    const searchInput = screen.getByPlaceholderText(/Search make or model/i);
+    const searchInput = screen.getByPlaceholderText(/Search make, model, or VIN/i);
     fireEvent.change(searchInput, { target: { value: 'Porsche' } });
 
     await waitFor(() => {

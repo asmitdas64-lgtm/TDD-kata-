@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../api/client.js';
 import { useAuth } from '../hooks/useAuth.js';
-import { getVehicleImage, formatCurrency, formatMileage } from '../utils/vehicle.utils.js';
+import { formatCurrency, formatMileage } from '../utils/vehicle.utils.js';
+import { resolveVehicleMedia } from '../utils/vehicleImages.js';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -13,6 +14,7 @@ import {
   Layers,
   Sparkles,
   ShoppingBag,
+  Cog,
   X
 } from 'lucide-react';
 
@@ -112,7 +114,7 @@ export const VehicleDetailPage = () => {
     );
   }
 
-  const imageUrl = getVehicleImage(vehicle);
+  const media = resolveVehicleMedia(vehicle);
   const isAvailable = vehicle.status === 'AVAILABLE' && vehicle.quantity > 0;
   const totalPrice = Number(vehicle.price) * purchaseQuantity;
 
@@ -133,20 +135,20 @@ export const VehicleDetailPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Media Presentation */}
         <div className="lg:col-span-7 flex flex-col space-y-4">
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-950 border border-zinc-800">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md">
             <img
-              src={imageUrl}
+              src={media.src}
               alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
               className="w-full h-full object-cover"
             />
             {/* Status overlay */}
             <div className="absolute top-4 left-4">
               {isAvailable ? (
-                <span className="bg-emerald-950/90 text-emerald-400 border border-emerald-500/50 text-xs font-mono px-3 py-1 uppercase tracking-widest backdrop-blur-md">
+                <span className="bg-zinc-950/90 text-emerald-400 border border-emerald-500/50 text-xs font-mono px-3 py-1 uppercase tracking-widest backdrop-blur-md">
                   AVAILABLE ({vehicle.quantity} UNITS IN STOCK)
                 </span>
               ) : (
-                <span className="bg-red-950/90 text-red-500 border border-red-600/50 text-xs font-mono px-3 py-1 uppercase tracking-widest backdrop-blur-md">
+                <span className="bg-red-600 text-white text-xs font-mono px-3 py-1 uppercase tracking-widest backdrop-blur-md">
                   OUT OF STOCK / SOLD
                 </span>
               )}
@@ -154,17 +156,17 @@ export const VehicleDetailPage = () => {
           </div>
 
           {/* Provenance Banner */}
-          <div className="p-4 bg-[#121215] border border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-400">
+          <div className="p-4 bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md flex items-center justify-between text-xs font-mono text-zinc-400">
             <div className="flex items-center space-x-2">
               <Shield className="w-4 h-4 text-red-600" />
               <span>Full Provenance & Inspection Verified</span>
             </div>
-            <span className="text-zinc-600">APEX-STD-990</span>
+            <span className="text-zinc-500">APEX-STD-990</span>
           </div>
         </div>
 
         {/* Right: Technical Specification & Acquisition Panel */}
-        <div className="lg:col-span-5 flex flex-col justify-between bg-[#121215] border border-zinc-800 p-6 sm:p-8">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md p-6 sm:p-8">
           <div>
             <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-4">
               <span className="text-xs font-mono uppercase tracking-widest text-red-500 font-semibold">
@@ -200,8 +202,8 @@ export const VehicleDetailPage = () => {
                 <span className="text-zinc-200 font-semibold">{vehicle.color}</span>
               </div>
               <div className="space-y-1 pt-2">
-                <span className="text-zinc-500 block uppercase">Year Of Assembly</span>
-                <span className="text-zinc-200 font-semibold">{vehicle.year}</span>
+                <span className="text-zinc-500 block uppercase">Transmission</span>
+                <span className="text-zinc-200 font-semibold">{media.transmission || 'Automatic'}</span>
               </div>
               <div className="space-y-1 pt-2">
                 <span className="text-zinc-500 block uppercase">Current Inventory</span>

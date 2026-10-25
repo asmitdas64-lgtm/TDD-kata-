@@ -12,15 +12,23 @@ describe('VehicleRepository Search Query Builder Unit Tests', () => {
     expect(where).toEqual({});
   });
 
-  it('should construct OR condition across make and model for text search "q"', () => {
+  it('should construct OR condition across make, model and VIN for text search "q"', () => {
     const where = vehicleRepo.buildSearchWhereClause({ q: 'Civic' });
     expect(where).toHaveProperty('AND');
     expect(where.AND).toContainEqual({
       OR: [
         { make: { contains: 'Civic' } },
-        { model: { contains: 'Civic' } }
+        { model: { contains: 'Civic' } },
+        { vin: { contains: 'Civic' } }
       ]
     });
+  });
+
+  it('should require every token of a multi-word query to match make, model or VIN', () => {
+    const where = vehicleRepo.buildSearchWhereClause({ q: '  Porsche   911 GT3 ' });
+    const tokenClauses = where.AND.filter((c) => c.OR);
+    expect(tokenClauses).toHaveLength(3);
+    expect(tokenClauses.map((c) => c.OR[0].make.contains)).toEqual(['Porsche', '911', 'GT3']);
   });
 
   it('should combine make, status, price range, and year range with AND clauses', () => {

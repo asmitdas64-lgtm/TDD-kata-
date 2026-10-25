@@ -12,34 +12,35 @@ describe('GET /api/vehicles/search Integration Tests', () => {
   it('should search vehicles matching make or model keyword via "q"', async () => {
     const res = await request(app)
       .get('/api/vehicles/search')
-      .query({ q: 'Camry' });
+      .query({ q: 'Porsche' });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(Array.isArray(res.body.data)).toBe(true);
     expect(res.body).toHaveProperty('meta');
     expect(res.body.data.length).toBeGreaterThan(0);
-    expect(res.body.data[0].model).toContain('Camry');
+    expect(res.body.data[0].make).toBe('Porsche');
   });
 
   it('should filter vehicles by combined criteria (make, price bounds, year)', async () => {
     const res = await request(app)
       .get('/api/vehicles/search')
       .query({
-        make: 'Honda',
-        minPrice: 20000,
-        maxPrice: 35000,
-        minYear: 2020
+        make: 'BMW',
+        minPrice: 80000,
+        maxPrice: 130000,
+        minYear: 2023
       });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
     res.body.data.forEach((vehicle) => {
-      expect(vehicle.make.toLowerCase()).toContain('honda');
+      expect(vehicle.make.toLowerCase()).toContain('bmw');
       const price = Number(vehicle.price);
-      expect(price).toBeGreaterThanOrEqual(20000);
-      expect(price).toBeLessThanOrEqual(35000);
-      expect(vehicle.year).toBeGreaterThanOrEqual(2020);
+      expect(price).toBeGreaterThanOrEqual(80000);
+      expect(price).toBeLessThanOrEqual(130000);
+      expect(vehicle.year).toBeGreaterThanOrEqual(2023);
     });
   });
 

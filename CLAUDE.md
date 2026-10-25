@@ -3,7 +3,7 @@
 Enterprise full-stack car dealership inventory and purchase management system developed under strict Test-Driven Development (TDD) using modern JavaScript (ES Modules).
 
 ## Stack
-- **Backend:** Node.js (ESM `"type": "module"`), Express 5, JavaScript, PostgreSQL, Prisma ORM, JWT, bcryptjs, Zod
+- **Backend:** Node.js (ESM `"type": "module"`), Express 5, JavaScript, MySQL, Prisma ORM, JWT, bcryptjs, Zod
 - **Testing (Backend):** Jest (Node ESM mode) or Node test runner, Supertest
 - **Frontend:** React, Vite, JavaScript (JSX), Tailwind CSS
 - **Testing (Frontend):** Vitest (native ESM), React Testing Library

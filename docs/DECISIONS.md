@@ -20,23 +20,23 @@
 
 ---
 
-## ADR 003: Persistence & ORM - Prisma with PostgreSQL
+## ADR 003: Persistence & ORM - Prisma with MySQL
 - **Date:** 2026-10-24
 - **Status:** Accepted
-- **Decision:** Use PostgreSQL as the relational database and Prisma (`@prisma/client`) as the query abstraction.
+- **Decision:** Use MySQL as the relational database and Prisma (`@prisma/client`) as the query abstraction.
 - **Context & Drivers:** Need strict relational integrity, transactional guarantees for inventory decrements, and clean schema definitions via `schema.prisma`.
-- **Consequences:** Clean schema modeling and migrations; seed scripts authored in ESM (`prisma/seed.js`); raw SQL migrations used for DB-level check constraints (`CHECK quantity >= 0`).
+- **Consequences:** Clean schema modeling and migrations; seed scripts authored in ESM (`prisma/seed.js`); raw SQL migrations used for DB-level check constraints (`CHECK (quantity >= 0)`).
 - **Alternatives Considered:** Drizzle, Sequelize.
 
 ---
 
-## ADR 004: Relational Database - PostgreSQL
+## ADR 004: Relational Database - MySQL
 - **Date:** 2026-10-24
 - **Status:** Accepted
-- **Decision:** Use PostgreSQL for relational storage.
-- **Context & Drivers:** Transactional safety (ACID), support for row-level locking, check constraints, and high concurrent read/write stability.
-- **Consequences:** Requires running PostgreSQL instance or Docker container for integration tests.
-- **Alternatives Considered:** SQLite, MongoDB.
+- **Decision:** Use MySQL for relational storage.
+- **Context & Drivers:** Transactional safety (ACID), support for row-level locking, check constraints (MySQL 8.0.16+), and high concurrent read/write stability.
+- **Consequences:** Requires running MySQL instance (default port 3306) or Docker container for integration tests.
+- **Alternatives Considered:** PostgreSQL, SQLite, MongoDB.
 
 ---
 

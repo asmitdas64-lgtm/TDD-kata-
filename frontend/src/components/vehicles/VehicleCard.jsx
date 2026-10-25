@@ -1,92 +1,96 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getVehicleImage, formatCurrency, formatMileage } from '../../utils/vehicle.utils.js';
-import { ArrowRight, Gauge, Calendar, ShieldCheck } from 'lucide-react';
+import { resolveVehicleMedia } from '../../utils/vehicleImages.js';
+import { formatCurrency, formatMileage } from '../../utils/vehicle.utils.js';
+import { ArrowUpRight, Gauge, Calendar, Cog, Palette } from 'lucide-react';
+
+const SpecChip = ({ icon: Icon, label, value }) => (
+  <div className="flex items-center gap-2 border border-zinc-800 bg-zinc-900/60 px-2.5 py-2 min-w-0">
+    <Icon className="w-3.5 h-3.5 text-red-500 shrink-0" />
+    <div className="min-w-0 leading-tight">
+      <span className="block text-[9px] uppercase tracking-widest text-zinc-500">{label}</span>
+      <span className="block text-[11px] text-zinc-200 truncate">{value}</span>
+    </div>
+  </div>
+);
 
 export const VehicleCard = ({ vehicle }) => {
-  const imageUrl = getVehicleImage(vehicle);
+  const media = resolveVehicleMedia(vehicle);
   const isAvailable = vehicle.status === 'AVAILABLE' && vehicle.quantity > 0;
 
   return (
-    <div className="group bg-[#121215] border border-zinc-800 hover:border-zinc-600 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-      {/* Top Image Container */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-950">
+    <article
+      id={`vehicle-card-${vehicle.id}`}
+      className="group flex flex-col bg-zinc-950/80 backdrop-blur-md border border-zinc-800/80 hover:border-red-600/60 transition-colors duration-300 overflow-hidden"
+    >
+      {/* Image */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900">
         <img
-          src={imageUrl}
+          src={media.src}
           alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
+          className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 ${
+            isAvailable ? 'brightness-90' : 'brightness-50 grayscale-[40%]'
+          }`}
         />
-        {/* Status Badge */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
+
         <div className="absolute top-3 left-3">
           {isAvailable ? (
-            <span className="bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 text-[11px] font-mono px-2 py-0.5 uppercase tracking-wider backdrop-blur-sm">
-              AVAILABLE ({vehicle.quantity})
+            <span className="inline-flex items-center gap-1.5 bg-zinc-950/85 text-emerald-400 border border-emerald-500/50 text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 bg-emerald-400" />
+              Available &middot; {vehicle.quantity}
             </span>
           ) : (
-            <span className="bg-red-950/80 text-red-500 border border-red-600/40 text-[11px] font-mono px-2 py-0.5 uppercase tracking-wider backdrop-blur-sm">
-              SOLD
+            <span className="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-mono font-bold px-2 py-1 uppercase tracking-widest">
+              Sold
             </span>
           )}
         </div>
 
-        {/* Color Badge */}
-        <div className="absolute top-3 right-3">
-          <span className="bg-zinc-900/80 text-zinc-300 border border-zinc-700/50 text-[10px] font-mono px-2 py-0.5 uppercase tracking-wider backdrop-blur-sm">
-            {vehicle.color}
+        {media.isFallback && (
+          <span className="absolute bottom-3 right-3 text-[9px] font-mono uppercase tracking-widest text-zinc-400 bg-zinc-950/80 px-2 py-0.5 border border-zinc-800">
+            Studio photo pending
           </span>
+        )}
+
+        <div className="absolute bottom-3 left-3 font-mono text-[10px] text-zinc-400 tracking-wider">
+          VIN &middot; {vehicle.vin}
         </div>
       </div>
 
-      {/* Body Details */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      {/* Body */}
+      <div className="p-5 flex-1 flex flex-col gap-4">
         <div>
-          <div className="flex items-baseline justify-between mb-1">
-            <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
-              {vehicle.year}
-            </span>
-            <span className="text-xs font-mono text-zinc-400">
-              VIN: {vehicle.vin.slice(-6)}
-            </span>
-          </div>
-
-          <h3 className="text-lg font-bold text-zinc-100 group-hover:text-red-500 transition-colors tracking-tight uppercase">
-            {vehicle.make} <span className="text-zinc-400">{vehicle.model}</span>
+          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-red-500">{vehicle.make}</span>
+          <h3 className="mt-0.5 text-lg font-extrabold text-zinc-50 uppercase tracking-tight leading-snug">
+            {vehicle.model}
           </h3>
-
-          <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-mono text-zinc-400 border-t border-b border-zinc-800/80 py-2.5 my-3">
-            <div className="flex items-center space-x-1.5">
-              <Gauge className="w-3.5 h-3.5 text-zinc-500" />
-              <span>{formatMileage(vehicle.mileage)}</span>
-            </div>
-            <div className="flex items-center space-x-1.5 justify-end">
-              <Calendar className="w-3.5 h-3.5 text-zinc-500" />
-              <span>Model Year {vehicle.year}</span>
-            </div>
-          </div>
         </div>
 
-        {/* Footer / Pricing & CTA */}
-        <div className="pt-2 flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-mono uppercase text-zinc-500 block leading-tight">
-              Asking Price
-            </span>
-            <span className="text-xl font-bold font-mono text-zinc-100">
-              {formatCurrency(vehicle.price)}
-            </span>
-          </div>
+        <div className="grid grid-cols-2 gap-2 font-mono">
+          <SpecChip icon={Calendar} label="Year" value={vehicle.year} />
+          <SpecChip icon={Gauge} label="Mileage" value={formatMileage(vehicle.mileage)} />
+          <SpecChip icon={Cog} label="Transmission" value={media.transmission || '—'} />
+          <SpecChip icon={Palette} label="Exterior" value={vehicle.color} />
+        </div>
 
+        <div className="mt-auto pt-4 border-t border-zinc-800/80 flex items-end justify-between">
+          <div>
+            <span className="block text-[10px] font-mono uppercase tracking-widest text-zinc-500">Price</span>
+            <span className="text-2xl font-bold font-mono text-zinc-50">{formatCurrency(vehicle.price)}</span>
+          </div>
           <Link
+            id={`vehicle-view-${vehicle.id}`}
             to={`/vehicles/${vehicle.id}`}
-            className="inline-flex items-center space-x-1.5 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-zinc-800 group-hover:bg-red-600 transition-colors"
+            className="inline-flex items-center gap-1.5 h-10 px-4 text-[11px] font-mono font-semibold uppercase tracking-wider text-white bg-zinc-800 group-hover:bg-red-600 transition-colors"
           >
-            <span>Inspect</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            View Vehicle
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

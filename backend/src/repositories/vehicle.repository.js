@@ -58,6 +58,85 @@ export class VehicleRepository {
       where: { id }
     });
   }
+
+  buildSearchWhereClause(filters = {}) {
+    const where = {};
+    const andClauses = [];
+
+    // General text search (q or search) across make and model
+    const searchTerm = filters.q || filters.search;
+    if (searchTerm) {
+      andClauses.push({
+        OR: [
+          { make: { contains: searchTerm } },
+          { model: { contains: searchTerm } }
+        ]
+      });
+    }
+
+    if (filters.make) {
+      andClauses.push({ make: { contains: filters.make } });
+    }
+
+    if (filters.model) {
+      andClauses.push({ model: { contains: filters.model } });
+    }
+
+    if (filters.color) {
+      andClauses.push({ color: { contains: filters.color } });
+    }
+
+    if (filters.status) {
+      andClauses.push({ status: filters.status });
+    }
+
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+      const priceFilter = {};
+      if (filters.minPrice !== undefined) {
+        priceFilter.gte = Number(filters.minPrice);
+      }
+      if (filters.maxPrice !== undefined) {
+        priceFilter.lte = Number(filters.maxPrice);
+      }
+      andClauses.push({ price: priceFilter });
+    }
+
+    if (filters.minYear !== undefined || filters.maxYear !== undefined) {
+      const yearFilter = {};
+      if (filters.minYear !== undefined) {
+        yearFilter.gte = parseInt(filters.minYear, 10);
+      }
+      if (filters.maxYear !== undefined) {
+        yearFilter.lte = parseInt(filters.maxYear, 10);
+      }
+      andClauses.push({ year: yearFilter });
+    }
+
+    if (andClauses.length > 0) {
+      where.AND = andClauses;
+    }
+
+    return where;
+  }
+
+  async searchVehicles({ filters = {}, pagination = {}, sort = {} } = {}) {
+    const where = this.buildSearchWhereClause(filters);
+    const skip = pagination.skip ?? 0;
+    const take = pagination.take ?? 10;
+    const orderBy = sort.field ? { [sort.field]: sort.order || 'desc' } : { createdAt: 'desc' };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.vehicle.findMany({
+        where,
+        skip,
+        take,
+        orderBy
+      }),
+      this.prisma.vehicle.count({ where })
+    ]);
+
+    return { items, total, where };
+  }
 }
 
 export const vehicleRepository = new VehicleRepository();

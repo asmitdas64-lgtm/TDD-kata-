@@ -6,6 +6,7 @@ import {
   createVehicleSchema,
   updateVehicleSchema,
   listVehicleSchema,
+  searchVehicleSchema,
   getVehicleParamsSchema
 } from '../schemas/vehicle.schema.js';
 
@@ -13,6 +14,10 @@ const router = Router();
 
 // Public routes
 router.get('/', validate(listVehicleSchema), vehicleController.list);
+
+// Critical Precedence: /search must be declared BEFORE /:id
+router.get('/search', validate(searchVehicleSchema), vehicleController.search);
+
 router.get('/:id', validate(getVehicleParamsSchema), vehicleController.getById);
 
 // Admin-protected routes

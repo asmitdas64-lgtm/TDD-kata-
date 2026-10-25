@@ -95,6 +95,48 @@ export class VehicleService {
     await this.vehicleRepo.delete(id);
     return { id, deleted: true };
   }
+
+  async searchVehicles(queryParams = {}) {
+    const page = Math.max(1, Number(queryParams.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(queryParams.limit) || 10));
+    const skip = (page - 1) * limit;
+
+    const filters = {
+      q: queryParams.q,
+      search: queryParams.search,
+      make: queryParams.make,
+      model: queryParams.model,
+      color: queryParams.color,
+      status: queryParams.status,
+      minPrice: queryParams.minPrice,
+      maxPrice: queryParams.maxPrice,
+      minYear: queryParams.minYear,
+      maxYear: queryParams.maxYear
+    };
+
+    const sort = {
+      field: queryParams.sortBy || 'createdAt',
+      order: queryParams.sortOrder || 'desc'
+    };
+
+    const { items, total } = await this.vehicleRepo.searchVehicles({
+      filters,
+      pagination: { skip, take: limit },
+      sort
+    });
+
+    const totalPages = Math.ceil(total / limit) || 1;
+
+    return {
+      vehicles: items,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages
+      }
+    };
+  }
 }
 
 export const vehicleService = new VehicleService();

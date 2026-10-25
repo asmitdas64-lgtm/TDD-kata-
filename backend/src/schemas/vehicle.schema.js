@@ -70,3 +70,24 @@ export const getVehicleParamsSchema = z.object({
     id: z.string().min(1, 'Vehicle ID is required')
   })
 });
+
+export const searchVehicleSchema = z.object({
+  query: z.object({
+    q: z.string().trim().optional(),
+    search: z.string().trim().optional(),
+    make: z.string().trim().optional(),
+    model: z.string().trim().optional(),
+    minYear: z.coerce.number().int().min(1900).max(2100).optional(),
+    maxYear: z.coerce.number().int().min(1900).max(2100).optional(),
+    minPrice: z.coerce.number().nonnegative().optional(),
+    maxPrice: z.coerce.number().nonnegative().optional(),
+    color: z.string().trim().optional(),
+    status: z.enum(['AVAILABLE', 'SOLD']).optional(),
+    page: z.coerce.number().int().min(1).default(1),
+    limit: z.coerce.number().int().min(1).max(100).default(10),
+    sortBy: z.enum(['price', 'year', 'mileage', 'createdAt']).default('createdAt'),
+    sortOrder: z.enum(['asc', 'desc']).default('desc')
+  })
+});
+
+

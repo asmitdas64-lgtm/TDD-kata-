@@ -9,11 +9,11 @@ export const validate = (schema) => {
       if (parsed.body !== undefined) {
         req.body = parsed.body;
       }
-      if (parsed.query !== undefined && req.query) {
-        Object.assign(req.query, parsed.query);
-      }
-      if (parsed.params !== undefined && req.params) {
-        Object.assign(req.params, parsed.params);
+      // Attach sanitized/coerced values to req.validated
+      req.validated = parsed;
+      // Copy coerced query numbers back into req.query where permissible
+      if (parsed.query !== undefined) {
+        req.validatedQuery = parsed.query;
       }
       next();
     } catch (error) {

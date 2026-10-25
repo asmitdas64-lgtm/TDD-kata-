@@ -20,7 +20,23 @@ export class VehicleController {
 
   list = async (req, res, next) => {
     try {
-      const result = await this.vehicleService.getVehicles(req.query);
+      const queryParams = req.validatedQuery || req.query;
+      const result = await this.vehicleService.getVehicles(queryParams);
+      return res.status(200).json({
+        success: true,
+        data: result.vehicles,
+        error: null,
+        meta: result.pagination
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  search = async (req, res, next) => {
+    try {
+      const queryParams = req.validatedQuery || req.query;
+      const result = await this.vehicleService.searchVehicles(queryParams);
       return res.status(200).json({
         success: true,
         data: result.vehicles,

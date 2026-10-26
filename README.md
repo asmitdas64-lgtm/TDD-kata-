@@ -42,19 +42,19 @@ The **Car Dealership Inventory System** is an end-to-end web application built f
 
 ### 3.1 Showroom Fleet Overview & Integrated Sticky Filter Bar
 The showroom displays the curated vehicle fleet over an atmospheric dark industrial garage canvas. The sticky filter bar features microcopy search, status segments, make selector, price sliders, and a reset counter.
-![Showroom Fleet Overview](docs/screenshots/showroom_overview.jpg)
+![Showroom Fleet Overview](docs/screenshots/showroom_overview.jpg?v=2)
 
 ### 3.2 Vehicle Technical Inspection & Spec Matrix
 Inspecting a vehicle reveals high-resolution photography, provenance badges, mileage, transmission spec, exterior paint, and stock level.
-![Vehicle Detail View](docs/screenshots/vehicle_detail.jpg)
+![Vehicle Detail View](docs/screenshots/vehicle_detail.jpg?v=2)
 
 ### 3.3 Transactional Vehicle Acquisition Modal
 Authenticated customers trigger the purchase modal. Quantity is constrained to available stock, total consideration recalculates dynamically, and an atomic order is created in MySQL.
-![Vehicle Purchase Modal](docs/screenshots/vehicle_purchase.jpg)
+![Vehicle Purchase Modal](docs/screenshots/vehicle_purchase.jpg?v=2)
 
 ### 3.4 Admin Inventory & Restock Management
 Admin managers access a real-time data table displaying VIN, Make, Model, Unit Price, and live stock counts, with inline restock controls and vehicle specification forms.
-![Admin Inventory Management](docs/screenshots/admin_inventory.jpg)
+![Admin Inventory Management](docs/screenshots/admin_inventory.jpg?v=2)
 
 ---
 
